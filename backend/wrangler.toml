@@ -1,9 +1,10 @@
 name = "offline"
-compatibility_date = "2023-12-01"
+compatibility_date = "2024-03-20"
+node_compat = true
 
 [vars]
-DATABASE_URL=""
-JWT_SECRET=""
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMjljYmEwMjUtYmNjNC00OTcxLTk3NzktOGZlOGFhMjVjYzUzIiwidGVuYW50X2lkIjoiOTVhZDhjMGNmZDg4MjZkZmNhMTA4NTkwODcwYzk4NDMyMmZjNDcyN2JiYWVhYjFlNzYzNmNkMmQ1MjlkM2QxNSIsImludGVybmFsX3NlY3JldCI6ImIyOTEyZjEyLTMyOTktNDYwYy1hZTk5LThlY2E1OWNkYWU1MSJ9.Pe1kSwaxCmysZMGicwEBRUCht9T4tyZ279NaEwaPpCY"
+JWT_SECRET="piyushsecret"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

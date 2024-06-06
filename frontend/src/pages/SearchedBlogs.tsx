@@ -1,12 +1,15 @@
-import { Appbar } from "../components/Appbar"
-import { BlogCard } from "../components/BlogCard"
+import { useSearchedBlogs } from "../hooks"
+import { Appbar } from "../components/Appbar";
+import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks"
 
-export const Blogs=()=>{
-    const {loading,blogs}=useBlogs();
-    if(loading){
-        return <div>
+
+export const SearchedBlogs=()=>{
+    const {loading,blogs}=useSearchedBlogs();
+
+    if(loading)
+        {
+            return <div>
             <Appbar/>
             <div className="flex justify-center">
             <div>
@@ -16,8 +19,8 @@ export const Blogs=()=>{
             <BlogSkeleton/>
             </div>
             </div>
-        </div>
-    }
+            </div>
+        }
     return <div>
         <Appbar/>
         <div className="flex justify-center">
@@ -26,12 +29,10 @@ export const Blogs=()=>{
              id={blog.id}
              authorName={blog.author.name||"Anonymous"}
              title={blog.title}
-             content={blog.content}
              description={blog.description}
-             publishedDate={new Date(blog.createdAt).toLocaleDateString()}
+             publishedDate={blog.createdAt}
         />)}
-        
         </div>
         </div>
-    </div>     
+    </div>    
 }

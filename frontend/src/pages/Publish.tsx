@@ -1,60 +1,89 @@
-import { ChangeEvent, useRef, useState } from "react"
-import { Appbar } from "../components/Appbar"
+import ReactQuill from "react-quill";
+// import { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useState } from "react";
+import { Appbar1 } from "../components/Appbar1";
 import { BACKEND_URL } from "../config";
-import JoditEditor from 'jodit-react';
 import axios from "axios"; 
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
-export const Publish=()=>{
-    const editor=useRef(null);
-    const [title,setTitle]=useState("");
-    const [content,setContent]=useState("");
-    const navigate=useNavigate();
-    return<div>
-    <Appbar/>
-    <div className="flex justify-center w-full pt-8">
-    <div className="max-w-screen-lg w-full">
-    <input onChange={(e)=>{
-        setTitle(e.target.value)
-    }} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Title"/>
-    {/* <TextEditor onChange={(e)=>{
-        setDescription(e.target.value)
-    }}/> */}
-    <JoditEditor
-			ref={editor}
-			value={content}
-			config={config}
-			tabIndex={1} // tabIndex of textarea
-			onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-			onChange={newContent => {}}
-		/>
-    <button onClick={async()=>{
-        const response=await axios.post(`${BACKEND_URL}/api/v1/blog`,{
-            title,
-            content:description
-        },{
-            headers:{
-                Authorization:localStorage.getItem("token")
-            }
-        });
-        navigate(`/blog/${response.data.id}`)
-    }} type="submit" className="mt-2 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-           Publish post
-       </button>
+
+const modules = {
+  toolbar: [
+    ["bold", "italic", "underline", "strike"],
+    ["image", "video"],
+  ],
+};
+
+export const Publish = () => {
+  const [title, setTitle] = useState("");
+  const [description,setDescription]=useState("");
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
+
+  const handleSubmit = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You are not logged in");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/blog`,
+        {
+          title,
+          description,
+          content: value, 
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      navigate("/blogs");
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      alert("Error creating blog");
+    }
+  };
+
+  return (
+    <div>
+      <Appbar1 onButtonClick={handleSubmit} />
+      
+
+      <div className="relative h-screen w-full">
+        {/* <div className="flex items-center justify-center h-full w-full"> */}
+        <div className="grid grid-cols-2 h-full">  
+          <div className="flex flex-col mt-0 pt-0 relative h-full ">
+            <input
+              type="text"
+              placeholder="Blog Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="mb-4 mt-4 p-2 w-full border"
+            />
+            <input
+              type="text"
+              placeholder="Blog Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="mb-4 mt-4 p-2 w-full border"
+            />
+            <div className="relative h-full w-full flex items-center justify-center">
+              <ReactQuill
+                className="h-full w-full"
+                theme="snow"
+                value={value} 
+                onChange={setValue}
+                modules={modules}
+              />
+            </div>
+          </div>
+            <div className="w-full relative h-full p-3 border-l border-black overflow-y-scroll" dangerouslySetInnerHTML={{ __html: value }}></div>
+        </div>
+      </div>
     </div>
-    </div>
-    
-    </div>
-}
-function TextEditor({onChange}:{onChange:(e:ChangeEvent<HTMLTextAreaElement>)=>void}){
-    return <div>
-       <div className="w-full mb-4">
-           <div className="flex items-center justify-between border">
-           <div className="my-2 bg-white rounded-b-lg  w-full">
-               <textarea onChange={onChange} id="editor" rows={8} className="focus:outline-none pl-2 block w-full px-0 text-sm text-gray-800 bg-white border-0 " placeholder="Write an article..." required />
-           </div>
-       </div>
-       
-       </div>
-    </div>  
-}
+  );
+};

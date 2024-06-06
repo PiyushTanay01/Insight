@@ -4,15 +4,24 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "@piyushtanay/medium-common": "^1.0.0",
     "@piyushtanay/medium-common1": "^1.0.0",
     "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
+    "aws-sdk": "^2.1632.0",
+    "bcryptjs": "^2.4.3",
     "hono": "^4.1.3",
+    "isomorphic-dompurify": "^2.11.0",
+    "jsdom": "^24.1.0",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.5.4",
     "prisma": "^5.11.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240208.0",
+    "@types/bcryptjs": "^2.4.6",
+    "glob": "^10.4.1",
+    "lru-cache": "^10.2.2",
+    "rimraf": "^5.0.7",
     "wrangler": "^3.32.0"
   }
 }

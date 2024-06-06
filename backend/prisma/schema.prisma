@@ -15,17 +15,22 @@ datasource db {
 
 model User{
   id Int @id @default(autoincrement())
-  name String
+  name String 
   username String @unique
   password String
   blogs Blog[]
+  about String @default("Blogger") 
 }
 
 model Blog{
   id Int @id @default(autoincrement())
   authorId Int
+  createdAt DateTime @default(now())
   content String
+  description String @default("Click to read the blog")
   title String
   published Boolean @default(false)
   author User @relation(fields: [authorId], references: [id])
 }
+
+

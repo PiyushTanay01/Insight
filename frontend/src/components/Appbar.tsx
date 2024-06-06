@@ -1,16 +1,78 @@
-import { Avatar } from "./BlogCard"
-import { Link } from "react-router-dom"
+import { useUser } from "../hooks"
+import { Avatar1 } from "./Avatar1"; 
+import { useState } from "react";
+import { LiaEditSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
+import { SearchBar } from "./SearchBar";
+import { SearchResultsList } from "./SearchResultsList";
 
+interface Blog {
+    authorName:string;
+    title:string;
+    content:string;
+    description:string;
+    publishedDate:Date;
+    id:number;
+  }
+  
 export const Appbar=()=>{
-    return <div className="border-b py-4 flex justify-between px-10">
-        <Link to={'/blogs'} className="flex flex-col justify-center cursor-pointer">
-            Medium
+
+    const token = localStorage.getItem("token")||"";
+    console.log(token);
+
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64));
+    const decode = JSON.parse(jsonPayload);
+    console.log(decode.id);
+    const id=(decode.id).toString();
+    console.log(id);
+
+    const [results,setResults]=useState<Blog[]>([]);
+
+    if (!token) {
+        console.log("No token found");
+        return;
+    }
+
+    const {loading,name,about}=useUser({id});
+    console.log(name);
+    if(loading)
+        {
+            return <div className="border-b py-4 flex justify-between px-10">
+            <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
+            Insight
+           </Link>
+            <SearchBar setResults={setResults}/>
+            <div>
+            <Link
+                  to={'/publish'}
+                  className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
+                  <span className="text-3xl">
+                    <LiaEditSolid />
+                  </span>
+                  <span className="text-sm mt-2">Write</span>
+        </Link>  
+            <Avatar1 name={name} about={about}/>
+            </div>
+            </div>
+        }
+    return <div className="border-b py-4 flex justify-between items-center px-10">
+        <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
+            Insight
         </Link>
+        <SearchBar setResults={setResults}/>
+        {results.length > 0 ? <SearchResultsList results={results} /> : null}  
         <div>
-            <Link to={`/publish`}>
-        <button type="button" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mr-6">New</button>
-        </Link>
-            <Avatar size={"big"} name="piyush"/>
+        <Link
+                  to={'/publish'}
+                  className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
+                  <span className="text-3xl">
+                    <LiaEditSolid />
+                  </span>
+                  <span className="text-sm mt-2">Write</span>
+        </Link>          
+        <Avatar1 name={name} about={about}/>
         </div>
     </div>
 }

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Link,Navigate,useNavigate } from "react-router-dom"
+import { Link,useNavigate } from "react-router-dom"
 import { SignupInput } from "@piyushtanay/medium-common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -14,8 +14,8 @@ export const Auth = ({type}:{type:"signup"|"signin"})=>{
 
     async function sendRequest(){
         try{
-            const response=axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`,postInputs);
-            const jwt=(await response).data;
+            const response=await axios.post(`${BACKEND_URL}/api/v1/user/${type==="signup"?"signup":"signin"}`,postInputs);
+            const jwt=await response.data;
             localStorage.setItem("token",jwt);
             navigate("/blogs");
         }
@@ -52,7 +52,7 @@ export const Auth = ({type}:{type:"signup"|"signin"})=>{
                     username:e.target.value
                 })
             }}/>
-            <LabelledInput label="Password" type={"password"} placeholder="123456" onChange={(e)=>{
+            <LabelledInput1 label="Password" type={"password"} placeholder="123456" onChange={(e)=>{
                 setPostInputs({
                     ...postInputs,
                     password:e.target.value
@@ -77,4 +77,26 @@ function LabelledInput({label,placeholder,onChange,type}:LabelledInputType)
     <label  className="block mb-2 text-sm font-semibold text-black text-bold pt-4">{label}</label>
     <input onChange={onChange} type={type||"text"} id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
     </div>
-} 
+}
+function LabelledInput1({label,placeholder,onChange,type}:LabelledInputType)
+{
+    const [inputType, setInputType] = useState(type);
+    const [buttonText, setButtonText] = useState('Show');
+
+    const toggleInputType = () => {
+    if (inputType === 'password') {
+      setInputType('text');
+      setButtonText('Hide');
+    } else {
+      setInputType('password');
+      setButtonText('Show');
+    }
+   };
+    return <div>
+    <label  className="block mb-2 text-sm font-semibold text-black text-bold pt-4">{label}</label>
+    <div className="relative ">
+    <input onChange={onChange} type={inputType} id="first_name" className="pr-60 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
+    <button type="button" className="absolute right-2 top-2 h-1 border-none bg-transparent cursor-pointer" onClick={toggleInputType}>{buttonText}</button>
+    </div>
+    </div>
+}  
