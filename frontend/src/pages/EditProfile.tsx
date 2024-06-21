@@ -12,7 +12,7 @@ export const EditProfile = () => {
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({ message: '', type: '' });
+  const [alert, setAlert] = useState({ message: '' });
 
   const handleSave = async () => {
     const token = localStorage.getItem("token")||"";
@@ -26,7 +26,7 @@ export const EditProfile = () => {
     console.log(id);
 
     if (!token) {
-      setAlert({ message: "You are not logged in", type: "error" });
+      setAlert({ message: "You are not logged in" });
       return;
     }
     try {
@@ -45,10 +45,10 @@ export const EditProfile = () => {
         }
       );
       console.log(response);
-      setAlert({ message: "Profile Updated Successfully", type: "success" });
+      setAlert({ message: "Profile Updated Successfully" });
     } catch (error) {
       // console.error("Error updating profile:", error.response ? error.response.data : error.message);
-      setAlert({ message: "Error updating profile", type: "error" });
+      setAlert({ message: "Error updating profile" });
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export const EditProfile = () => {
   <div className="flex-grow flex items-center justify-center p-6">
     <div className="border-2 max-w-md w-full bg-white shadow-md rounded-md p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Edit Your Profile</h1>
-      {alert.message && <Alert message={alert.message} type={alert.type} onClose={() => setAlert({ message: '', type: '' })} />}
+      {alert.message && <Alert message={alert.message}  onClose={() => setAlert({ message: ''})} />}
       <form className="space-y-6 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700" htmlFor="username">Username</label>

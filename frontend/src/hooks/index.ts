@@ -236,7 +236,7 @@ export const useUserBlogs=()=>{
 }
 
 export const useSearchedBlogs=()=>{
-    const [loading,setLoading]=useState(true);
+    const [loading]=useState(true);
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const handleSearch = async (query:string) => {
       try {
@@ -253,9 +253,10 @@ export const useSearchedBlogs=()=>{
         console.error('Error fetching blogs:', error);
       }
     };
-    useEffect(()=>{
-        handleSearch(query);
-    },[]);
+    console.log(handleSearch);
+    // useEffect(()=>{
+    //     handleSearch(query);
+    // },[]);
 
     return{ loading,blogs}
 }
