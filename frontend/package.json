@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@piyushtanay/medium-common": "^1.0.0",
+    "@piyushtanay/medium-common1": "^1.0.0",
     "axios": "^1.6.8",
     "dompurify": "^3.1.4",
     "html-react-parser": "^5.1.10",
