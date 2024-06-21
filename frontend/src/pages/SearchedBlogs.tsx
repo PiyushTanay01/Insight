@@ -4,6 +4,7 @@ import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 
 
+
 export const SearchedBlogs=()=>{
     const {loading,blogs}=useSearchedBlogs();
 
@@ -30,7 +31,8 @@ export const SearchedBlogs=()=>{
              authorName={blog.author.name||"Anonymous"}
              title={blog.title}
              description={blog.description}
-             publishedDate={blog.createdAt}
+             publishedDate={blog.createdAt.toLocaleString()}
+             content={blog.content}
         />)}
         </div>
         </div>

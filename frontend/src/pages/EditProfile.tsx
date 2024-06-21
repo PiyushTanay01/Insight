@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {Appbar2} from '../components/Appbar2';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
@@ -15,7 +15,7 @@ export const EditProfile = () => {
   const [alert, setAlert] = useState({ message: '', type: '' });
 
   const handleSave = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")||"";
 
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -44,9 +44,10 @@ export const EditProfile = () => {
           },
         }
       );
+      console.log(response);
       setAlert({ message: "Profile Updated Successfully", type: "success" });
     } catch (error) {
-      console.error("Error updating profile:", error.response ? error.response.data : error.message);
+      // console.error("Error updating profile:", error.response ? error.response.data : error.message);
       setAlert({ message: "Error updating profile", type: "error" });
     } finally {
       setLoading(false);

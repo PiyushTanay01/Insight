@@ -42,6 +42,7 @@ export const Publish = () => {
         }
       );
       navigate("/blogs");
+      console.log(response);
     } catch (error) {
       console.error("Error creating blog:", error);
       alert("Error creating blog");

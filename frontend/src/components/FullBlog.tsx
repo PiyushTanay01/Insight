@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Blog1, addBookmark, deleteBlog, fetchBookmarkStatus, removeBookmark } from "../hooks";
 import { Appbar } from "./Appbar";
 import { Avatar } from "./BlogCard";
-import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
-import { BACKEND_URL } from "../config";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +11,7 @@ export interface About {
 }
 
 export const FullBlog = ({ blog }: { blog: Blog1}) => {
-  const sanitizedContent = DOMPurify.sanitize(blog.content);
+  // const sanitizedContent = DOMPurify.sanitize(blog.content);
   parse(blog.content);
 
   const token = localStorage.getItem("token")||"";

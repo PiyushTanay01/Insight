@@ -1,8 +1,21 @@
-import React from 'react'
+// import { Blog } from './BlogList';
 import { SearchResult } from './SearchResult';
 import { Link } from 'react-router-dom';
 
-export const SearchResultsList = ({results}) => {
+interface Blog {
+  authorName:string;
+  title:string;
+  content:string;
+  description:string;
+  publishedDate:Date;
+  id:number;
+}
+
+interface SearchResultsListProps {
+  results: Blog[];
+}
+
+export const SearchResultsList: React.FC<SearchResultsListProps> = ({ results }) => {
   return (
     
     <div className='absolute top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg p-4 w-52 shadow-lg z-10'>

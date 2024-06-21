@@ -35,7 +35,7 @@ export const Appbar=()=>{
         return;
     }
 
-    const {loading,name,about}=useUser({id});
+    const {name,about}=useUser({id});
     console.log(name);
     // if(loading)
     //     {

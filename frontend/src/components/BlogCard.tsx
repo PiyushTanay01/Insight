@@ -1,27 +1,17 @@
-import { Link, useNavigate } from "react-router-dom";
-import user from "../img/user.png"
-import edit from '../img/edit.png';
-import logout from '../img/log-out.png';
+import { Link } from "react-router-dom";
 import '../index.css';
-import { useEffect,useRef, useState } from "react";
+
 
 interface BlogCardProps{
     authorName:string;
     title:string;
     content:string;
     description:string;
-    publishedDate:Date;
+    publishedDate:string;
     id:number;
-    likes:number;
 }
 
-interface DropdownItemProps {
-    img: string;
-    text: string;
-    onClick?: () => void;
-  }
-
-export const BlogCard=({id,authorName,title,content,description,publishedDate,}:BlogCardProps)=>{
+export const BlogCard=({id,authorName,title,description,publishedDate}:BlogCardProps)=>{
     return <Link to={`/blog/${id}`}>
         <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
         <div className="flex">

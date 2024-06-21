@@ -1,9 +1,7 @@
 import { useUser } from "../hooks";
-import { Avatar1 } from "./Avatar1"; 
 import { Link } from "react-router-dom";
 import React from "react";
-import { LiaEditSolid } from "react-icons/lia";
-// import DarkMode from "./DarkMode";
+
 
 
 interface AppbarProps {
@@ -30,7 +28,7 @@ export const Appbar1: React.FC<AppbarProps> = ({ onButtonClick }) => {
       return;
   }
 
-  const {loading,name,about}=useUser({id});
+  const {loading,name}=useUser({id});
   console.log(name);
   if(loading)
       {

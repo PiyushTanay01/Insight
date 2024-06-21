@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { fetchBookmarkStatus, useBlog, useUser } from "../hooks";
+import {  useBlog } from "../hooks";
 import { FullBlog } from "../components/FullBlog";
 import { Appbar } from "../components/Appbar";
 import { Spinner } from "../components/Spinner";
-import { useState } from "react";
+
 
 export interface Blog1{
     "content":string;
@@ -24,7 +24,7 @@ export const Blog=()=>{
     const {loading,blog}=useBlog({
         id:id||""
     });
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")||"";
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(atob(base64));
