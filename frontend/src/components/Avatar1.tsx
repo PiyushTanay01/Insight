@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import user from "../img/user.png"
 import edit from '../img/edit.png';
 import logout from '../img/log-out.png';
+import bookmark from '../img/bookmark.png'
 import '../index.css';
 import { useEffect,useRef, useState } from "react";
 
@@ -47,6 +48,7 @@ export function Avatar1({name,about}:{name:string,about:string}){
           <ul>
             <Link to={`/myBlogs`}><DropdownItem img = {user} text = {"My Blogs"}/></Link>
             <Link to={`/editProfile`}><DropdownItem img={edit} text={"Edit Profile"}/></Link>
+            <Link to={`/bookmark`}><DropdownItem img={bookmark} text={"Bookmark"}/></Link>
             <DropdownItem img={logout} text={"Logout"} onClick={handleSignout}/>
           </ul>
         </div>

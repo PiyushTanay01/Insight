@@ -3,6 +3,7 @@ import { Avatar1 } from "./Avatar1";
 import { Link } from "react-router-dom";
 import React from "react";
 import { LiaEditSolid } from "react-icons/lia";
+// import DarkMode from "./DarkMode";
 
 
 interface AppbarProps {
@@ -64,7 +65,7 @@ export const Appbar1: React.FC<AppbarProps> = ({ onButtonClick }) => {
         >
           Publish
         </button>
-          
+          {/* <DarkMode/> */}
       {/* <Avatar1 name={name}/> */}
       </div>
   </div>

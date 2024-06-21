@@ -20,7 +20,7 @@ export const Auth = ({type}:{type:"signup"|"signin"})=>{
             navigate("/blogs");
         }
         catch(e){
-            alert("Error while signing up")
+            alert("Error while signing up");
         }
         
     }

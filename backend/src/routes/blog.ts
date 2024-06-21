@@ -92,6 +92,41 @@ blogRouter.post('/', async (c) => {
     })
   })
   
+  blogRouter.get('/bookmarks', async (c) => {
+    const userId = c.get("userId");
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    try {
+      const bookmarks = await prisma.bookmark.findMany({
+        where: {
+          userId: Number(userId),
+        },
+        include: {
+          blog: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              content: true,
+              createdAt: true,
+              author: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return c.json({ bookmarks });
+    } catch (e) {
+      c.status(500);
+      return c.json({ message: 'Error fetching bookmarks', error: e });
+    }
+  }); 
+
   blogRouter.get('/bulk', async(c) => {
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
@@ -231,6 +266,8 @@ blogRouter.post('/', async (c) => {
           return c.json({ message: 'Internal Server Error',error });
         }
       });
+
+       
       
   blogRouter.get('/:id', async(c) => {
     const id= c.req.param("id");
@@ -245,6 +282,7 @@ blogRouter.post('/', async (c) => {
             },
             select: {
                 id: true,
+                authorId: true,
                 title: true,
                 content: true,
                 description: true,
@@ -265,7 +303,7 @@ blogRouter.post('/', async (c) => {
     {
         c.status(500);
         return c.json({
-            message:"Error while fetching blog posts"
+            message:"Error while fetching blog posts",e
         });
     }
   })
@@ -278,7 +316,7 @@ blogRouter.post('/', async (c) => {
   
     try {
       const userId = c.get("userId");
-  
+      console.log("userId: ",userId);
       const blog = await prisma.blog.findFirst({
         where: {
           id: Number(id)
@@ -287,16 +325,34 @@ blogRouter.post('/', async (c) => {
           authorId: true
         }
       });
-  
+
       if (!blog) {
         c.status(404);
         return c.json({ message: 'Blog not found' });
       }
-  
+      else{
+        console.log("blog_authorId: ",blog.authorId);
+      }
+
       if (blog.authorId !== Number(userId)) {
         c.status(403);
         return c.json({ message: 'Forbidden: You are not authorized to delete this blog' });
       }
+
+      const bookmark=await prisma.bookmark.findFirst({
+        where:{
+          blogId:Number(id)
+        }
+      })
+
+      if(bookmark)
+        {
+          await prisma.bookmark.delete({
+            where:{
+              id:bookmark.id
+            }
+          })
+        }
   
       // Delete the blog
       await prisma.blog.delete({
@@ -337,3 +393,123 @@ blogRouter.post('/', async (c) => {
         });
     }
     })
+
+    blogRouter.post('/:id/bookmark', async (c) => {
+      const blogId = c.req.param("id");
+      const userId = c.get("userId");
+      const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate());
+    
+      try {
+        const bookmark = await prisma.bookmark.create({
+          data: {
+            userId: Number(userId),
+            blogId: Number(blogId),
+          },
+        });
+        return c.json({ message: 'Blog bookmarked successfully', bookmark });
+      } catch (e) {
+        c.status(500);
+        return c.json({ message: 'Error bookmarking blog', error: e });
+      }
+    });
+    
+    blogRouter.get('/:blogid/bookmark',async(c)=>{
+      const userid=c.get("userId");
+      const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate());
+
+      try{
+        const bookmark=await prisma.bookmark.findFirst({
+          where:{
+            userId:Number(userid),
+            blogId:Number(c.req.param("blogid"))
+          }
+        })
+
+        const isBookmarked = !!bookmark;
+
+        c.status(200);
+        return c.json({ isBookmarked });
+        // if(bookmark)
+        //   return true
+        // else
+        // return false
+      }
+      catch(e){
+        c.status(500)
+        return c.json({message:"Error while finding bookmarked blog", error: e})
+      }
+    })
+
+    // blogRouter.get('/bookmarks', async (c) => {
+    //   const userId = c.get("userId");
+    //   const prisma = new PrismaClient({
+    //     datasourceUrl: c.env.DATABASE_URL,
+    //   }).$extends(withAccelerate());
+    
+    //   try {
+    //     const bookmarks = await prisma.bookmark.findMany({
+    //       where: {
+    //         userId: Number(userId),
+    //       },
+    //       include: {
+    //         blog: {
+    //           select: {
+    //             id: true,
+    //             title: true,
+    //             description: true,
+    //             content: true,
+    //             createdAt: true,
+    //             author: {
+    //               select: {
+    //                 name: true,
+    //               },
+    //             },
+    //           },
+    //         },
+    //       },
+    //     });
+    //     return c.json({ bookmarks });
+    //   } catch (e) {
+    //     c.status(500);
+    //     return c.json({ message: 'Error fetching bookmarks', error: e });
+    //   }
+    // });
+
+    blogRouter.delete('/:id/bookmark', async (c) => {
+      const blogId = c.req.param("id");
+      const userId = c.get("userId");
+      const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate());
+    
+      try {
+        // Check if the bookmark exists
+        const bookmark = await prisma.bookmark.findFirst({
+          where: {
+            userId: Number(userId),
+            blogId: Number(blogId),
+          },
+        });
+    
+        if (!bookmark) {
+          c.status(404);
+          return c.json({ message: 'Bookmark not found' });
+        }
+    
+        // Delete the bookmark
+        await prisma.bookmark.delete({
+          where: {
+            id: bookmark.id,
+          },
+        });
+    
+        return c.json({ message: 'Bookmark removed successfully' });
+      } catch (e) {
+        c.status(500);
+        return c.json({ message: 'Error removing bookmark', error: e });
+      }
+    });

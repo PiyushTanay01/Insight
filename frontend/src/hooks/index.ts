@@ -15,12 +15,25 @@ export interface Blog{
 export interface Blog1{
     "content":string;
     "title":string;
+    "authorId":number;
     "description":string;
     "id":number;
     "createdAt":Date;
     "author":{
         "name":string;
         "about":string;
+    }
+}
+export interface Bookmark{
+    "blog":{
+        "content":string;
+        "title":string;
+        "description":string;
+        "id":number;
+        "createdAt":Date;
+        "author":{
+            "name":string;
+        }
     }
 }
 export const useUser=({id}:{id:string})=>{
@@ -54,6 +67,87 @@ export const useUser=({id}:{id:string})=>{
         about
     }
 }
+
+export const useBookmark=()=>{
+    const [loading,setLoading]=useState(true);
+    const [blogs,setBlogs]=useState<Bookmark[]>([]);
+    
+    const Blog1=async()=>{
+        try{
+            const res=await axios.get(`${BACKEND_URL}/api/v1/blog/bookmarks`,{headers:{
+                Authorization:localStorage.getItem("token")}
+            });
+            console.log(res.data.bookmark);
+            setBlogs(res.data.bookmarks);
+            setLoading(false);
+        }
+        catch(e)
+        {
+            console.log("Error while fetching data:",e);
+        }
+    }
+    useEffect(()=>{
+        Blog1();
+    },[])
+
+    return {
+        loading,
+        blogs
+    }
+}
+
+export const fetchBookmarkStatus = async (blogId:string, token:string|null) => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/v1/blog/${blogId}/bookmark`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      return response.data.isBookmarked;
+    } catch (error) {
+      console.error("Error fetching bookmark status:", error);
+      throw error;
+    }
+  };
+  
+  export const addBookmark = async (blogId:string, token:string|null) => {
+    try {
+      await axios.post(`${BACKEND_URL}/api/v1/blog/${blogId}/bookmark`, {}, {
+        headers: {
+          Authorization: token,
+        },
+      });
+    } catch (error) {
+      console.error("Error adding bookmark:", error);
+      throw error;
+    }
+  };
+  
+  export const removeBookmark = async (blogId:string, token:string|null) => {
+    try {
+      await axios.delete(`${BACKEND_URL}/api/v1/blog/${blogId}/bookmark`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+    } catch (error) {
+      console.error("Error removing bookmark:", error);
+      throw error;
+    }
+  };
+
+  export const deleteBlog = async (blogId: string, token: string|null) => {
+    try {
+      await axios.delete(`${BACKEND_URL}/api/v1/blog/${blogId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      throw error;
+    }
+  };
 
 export const useBlog=({id}:{id:string})=>{
     const [loading,setLoading]=useState(true);

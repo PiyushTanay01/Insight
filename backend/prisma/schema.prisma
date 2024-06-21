@@ -19,7 +19,8 @@ model User{
   username String @unique
   password String
   blogs Blog[]
-  about String @default("Blogger") 
+  about String @default("Blogger")
+  bookmark Bookmark[] 
 }
 
 model Blog{
@@ -31,6 +32,15 @@ model Blog{
   title String
   published Boolean @default(false)
   author User @relation(fields: [authorId], references: [id])
+  bookmark Bookmark[]
 }
 
+model Bookmark {
+  id Int @id @default(autoincrement())
+  userId Int
+  blogId Int
+  user User @relation(fields: [userId], references: [id])
+  blog Blog @relation(fields: [blogId], references: [id])
+  createdAt DateTime @default(now())
+}
 

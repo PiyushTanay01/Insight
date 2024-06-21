@@ -37,26 +37,27 @@ export const Appbar=()=>{
 
     const {loading,name,about}=useUser({id});
     console.log(name);
-    if(loading)
-        {
-            return <div className="border-b py-4 flex justify-between px-10">
-            <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
-            Insight
-           </Link>
-            <SearchBar setResults={setResults}/>
-            <div>
-            <Link
-                  to={'/publish'}
-                  className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
-                  <span className="text-3xl">
-                    <LiaEditSolid />
-                  </span>
-                  <span className="text-sm mt-2">Write</span>
-        </Link>  
-            <Avatar1 name={name} about={about}/>
-            </div>
-            </div>
-        }
+    // if(loading)
+    //     {
+    //         return <div className="border-b py-4 flex justify-between px-10">
+    //         <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
+    //         Insight
+    //        </Link>
+    //         <SearchBar setResults={setResults}/>
+    //         {results.length > 0 ? <SearchResultsList results={results} /> : null} 
+    //         <div>
+    //         <Link
+    //               to={'/publish'}
+    //               className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
+    //               <span className="text-3xl">
+    //                 <LiaEditSolid />
+    //               </span>
+    //               <span className="text-sm mt-2">Write</span>
+    //        </Link>  
+    //         <Avatar1 name={name} about={about}/>
+    //         </div>
+    //         </div>
+    //     }
     return <div className="border-b py-4 flex justify-between items-center px-10">
         <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
             Insight
@@ -74,5 +75,6 @@ export const Appbar=()=>{
         </Link>          
         <Avatar1 name={name} about={about}/>
         </div>
+        {/* <DarkMode/> */}
     </div>
 }

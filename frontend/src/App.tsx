@@ -6,6 +6,7 @@ import { Blogs } from './pages/Blogs'
 import { Publish } from './pages/Publish'
 import { MyBlogs } from './pages/MyBlogs'
 import { SearchedBlogs} from './pages/SearchedBlogs'
+import { Bookmark } from './pages/Bookmark'
 import EditProfile from './pages/EditProfile'
 import HomePage from './pages/Homepage'
 
@@ -24,6 +25,7 @@ function App() {
            <Route path='/myBlogs' element={<MyBlogs/>}/>
            <Route path='/search/:query?' element={<SearchedBlogs/>}/>
            <Route path='/editProfile' element={<EditProfile/>}/>
+           <Route path='/bookmark' element={<Bookmark/>}/>
         </Routes>
       </BrowserRouter>
     </>

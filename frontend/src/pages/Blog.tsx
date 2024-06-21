@@ -1,8 +1,22 @@
 import { useParams } from "react-router-dom";
-import { useBlog, useUser } from "../hooks";
+import { fetchBookmarkStatus, useBlog, useUser } from "../hooks";
 import { FullBlog } from "../components/FullBlog";
 import { Appbar } from "../components/Appbar";
 import { Spinner } from "../components/Spinner";
+import { useState } from "react";
+
+export interface Blog1{
+    "content":string;
+    "title":string;
+    "description":string;
+    "id":number;
+    "createdAt":Date;
+    "author":{
+        "name":string;
+        "about":string;
+    }
+}
+
 
 
 export const Blog=()=>{
@@ -10,7 +24,6 @@ export const Blog=()=>{
     const {loading,blog}=useBlog({
         id:id||""
     });
-
     const token = localStorage.getItem("token");
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -30,7 +43,9 @@ export const Blog=()=>{
             </div>
         </div>
     }
+
+    // const bookmark=handleFetchBookmarkStatus(blog);
     return <div>
-        <FullBlog blog={blog}/>
+        <FullBlog blog={blog} />
     </div>
 }

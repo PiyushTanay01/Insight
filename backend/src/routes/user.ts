@@ -124,6 +124,7 @@ userRouter.post('/signup', async (c) => {
     return c.text("Invalid")
   }
   })
+
   userRouter.post('/signin', async(c) => {
     const body=await c.req.json();
     const {success}=signinInput.safeParse(body);
@@ -164,7 +165,8 @@ userRouter.post('/signup', async (c) => {
             },c.env.JWT_SECRET);
             return c.text(jwt)
           }
-          return c.json("Something went wrong");
+          if(i==user.length-1)
+          return c.json("Password incorrect");
       }
     }
     catch(e){

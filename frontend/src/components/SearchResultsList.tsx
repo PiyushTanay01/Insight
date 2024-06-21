@@ -9,9 +9,9 @@ export const SearchResultsList = ({results}) => {
       <div className="absolute top-[-10px] left-1/2 transform -translate-x-1/2 h-5 w-5 bg-white rotate-45"></div>
         {
             
-            results.map((result,id)=>{
+            results.map((result)=>{
                 return <Link to={`/blog/${result.id}`}>
-                <SearchResult result={result} key={id}/>
+                <SearchResult result={result} />
                 </Link>
             })
         }
