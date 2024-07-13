@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, sign, verify } from 'hono/jwt'
+import {  sign, verify } from 'hono/jwt'
 import bcrypt  from 'bcryptjs';
 const saltRounds = 10;
 import { signupInput,signinInput } from "@piyushtanay/medium-common1";
@@ -119,7 +119,8 @@ userRouter.post('/signup', async (c) => {
     return c.text(jwt)
     
   } catch (e) {
-    console.log(e);
+    // console.log(e);
+    console.log("Error happened")
     c.status(411);
     return c.text("Invalid")
   }
@@ -152,7 +153,7 @@ userRouter.post('/signup', async (c) => {
         c.status(403);
         return c.text("Invalid")
       }
-      console.log(user[0].password);
+      // console.log(user[0].password);
       for(let i=0;i<user.length;i++)
       {
          const check=await comparePassword(body.password,user[i].password)

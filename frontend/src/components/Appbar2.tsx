@@ -25,33 +25,31 @@ export const Appbar2=()=>{
   console.log(name);
   if(loading)
       {
-          return <div className="border-b py-4 flex justify-between px-10">
-          <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
-          Insight
-         </Link>
-         <div>
-         </div>
-          <div>
-          <Link
-                to={'/publish'}
-                className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
-                <span className="text-3xl">
-                  <LiaEditSolid />
-                </span>
-                <span className="text-sm mt-2">Write</span>
-      </Link>  
-          <Avatar1 name={name} about={about}/>
-          </div>
-          </div>
+        <div className="border-b sm:py-4 py-2 flex justify-between items-center sm:px-10 px-5">
+        <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
+            Insight
+        </Link> 
+        <div>
+        <Link
+                  to={'/publish'}
+                  className=" flex items-center gap-1 text-gray-500 mr-12 mt-5">
+                  <span className="text-3xl">
+                    <LiaEditSolid />
+                  </span>
+                  <span className="text-sm mt-2">Write</span>
+        </Link>          
+        <Avatar1 name={name} about={about}/>
+        </div>
+    </div>
       }
-  return <div className="border-b py-4 flex justify-between items-center px-10">
+  return <div className="border-b sm:py-4 py-2 flex justify-between items-center sm:px-10 px-5">
       <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
           Insight
       </Link> 
       <div>
       <Link
                 to={'/publish'}
-                className="hidden md:flex items-center gap-1 text-gray-500 mr-12 mt-5">
+                className=" flex items-center gap-1 text-gray-500 mr-12 mt-5">
                 <span className="text-3xl">
                   <LiaEditSolid />
                 </span>

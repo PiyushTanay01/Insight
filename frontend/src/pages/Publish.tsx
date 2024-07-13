@@ -56,14 +56,14 @@ export const Publish = () => {
 
       <div className="relative h-screen w-full">
         {/* <div className="flex items-center justify-center h-full w-full"> */}
-        <div className="grid grid-cols-2 h-full">  
+        <div className="sm:grid sm:grid-cols-2 h-full">  
           <div className="flex flex-col mt-0 pt-0 relative h-full ">
             <input
               type="text"
               placeholder="Blog Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mb-4 mt-4 p-2 w-full border"
+              className="sm:mb-4 mt-4 p-2 w-full border"
             />
             <input
               type="text"
@@ -82,7 +82,7 @@ export const Publish = () => {
               />
             </div>
           </div>
-            <div className="w-full relative h-full p-3 border-l border-black overflow-y-scroll" dangerouslySetInnerHTML={{ __html: value }}></div>
+            <div className="hidden md:block -full relative h-full p-3 border-l border-black overflow-y-scroll" dangerouslySetInnerHTML={{ __html: value }}></div>
         </div>
       </div>
     </div>

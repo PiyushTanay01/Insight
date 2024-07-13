@@ -12,20 +12,36 @@ const App: React.FC = () => {
 };
 
 const Header: React.FC = () => (
+  // <header className="bg-yellow-500">
+  //   <nav className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 border-b border-black">
+  //     <div className="text-3xl font-bold text-black">
+  //       <a href="#">Insight</a>
+  //     </div>
+  //     <ul className="flex space-x-6 text-lg">
+  //       <li><Link to={'/blogs'} className="text-black">Blogs</Link></li>
+  //       <li><Link to={'/publish'} className="text-black">Write</Link></li>
+  //       {/* <li><a href="#" className="text-black"></a></li> */}
+  //       <li><Link to={'/signin'} className="text-black">Sign in</Link></li>
+  //       <li><Link to={'/signup'} className="bg-black text-white px-4 py-2 rounded-full">Get started</Link></li>
+  //     </ul>
+  //   </nav>
+  // </header>
   <header className="bg-yellow-500">
-    <nav className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 border-b border-black">
-      <div className="text-3xl font-bold text-black">
-        <a href="#">Insight</a>
-      </div>
-      <ul className="flex space-x-6 text-lg">
-        <li><Link to={'/blogs'} className="text-black">Blogs</Link></li>
-        <li><Link to={'/publish'} className="text-black">Write</Link></li>
-        {/* <li><a href="#" className="text-black"></a></li> */}
-        <li><Link to={'/signin'} className="text-black">Sign in</Link></li>
-        <li><Link to={'/signup'} className="bg-black text-white px-4 py-2 rounded-full">Get started</Link></li>
-      </ul>
-    </nav>
-  </header>
+  <nav className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 border-b border-black md:px-12 lg:px-24">
+    <div className="text-3xl font-bold text-black">
+      <a href="#">Insight</a>
+    </div>
+    <ul className="flex pt-6 ml-5 sm:pl-0 sm:mt-0 space-x-6 text-lg  md:space-x-8 lg:space-x-12">
+      <li><Link to={'/blogs'} className=" text-black">Blogs</Link></li>
+      <li className="md:block hidden"><Link to={'/publish'} className="text-black">Write</Link></li>
+      {/* <li><a href="#" className="text-black"></a></li> */}
+      <li><Link to={'/signin'} className="text-black">Sign in</Link></li>
+      <li><Link to={'/signup'} className="sm:bg-black sm:text-white px-4 py-2 sm:rounded-full md:px-6 md:py-3 lg:px-8 lg:py-4">Get started</Link></li>
+    </ul>
+  </nav>
+</header>
+
+
 );
 
 const Main: React.FC = () => (

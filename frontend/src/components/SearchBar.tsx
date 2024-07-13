@@ -47,9 +47,9 @@ interface SearchBarProps {
       }, []);
 
     return (
-    <div ref={searchBoxRef} className="relative border-2 bg-white  rounded-xl flex items-center shadow">
+    <div ref={searchBoxRef} className="hidden sm:block relative border-2 bg-white  rounded-xl md:flex items-center shadow">
         <FaSearch id="search-icon" className="text-gray-400 ml-3"/>
-        <input  placeholder="Type to Search..." className="w-full py-2 pl-10 pr-4 text-gray-700 rounded-lg focus:outline-none"
+        <input  placeholder="Type to Search..." className="w-1 sm:w-full py-2 pl-10 pr-4 text-gray-700 rounded-lg focus:outline-none"
                 value={input} onChange={(e)=>handleChange(e.target.value)}/>
     </div>
     );

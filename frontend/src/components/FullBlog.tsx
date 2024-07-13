@@ -80,7 +80,7 @@ export const FullBlog = ({ blog }: { blog: Blog1}) => {
   return (
     <div>
       <Appbar />
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <div className="grid grid-cols-12 px-10 w-full pt-200 max-w-screen-xl pt-12">
           <div className="col-span-8">
             <div className="flex items-center">
@@ -161,7 +161,90 @@ export const FullBlog = ({ blog }: { blog: Blog1}) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
+      <div className="flex justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-12 px-4 md:px-10 w-full max-w-screen-xl pt-12">
+      <div className="md:col-span-8">
+      <div className="flex items-center flex-wrap md:flex-nowrap">
+        <div className="text-3xl md:text-5xl font-extrabold mb-4 md:mb-0">
+          {blog.title}
+        </div>
+        <div
+          onClick={handleBookmark}
+          className="ml-2 md:ml-4 cursor-pointer"
+        >
+          {isBookmarked ? (
+            <FaBookmark className="text-red-500" size={32} />
+          ) : (
+            <FaRegBookmark className="text-blue-500" size={32} />
+          )}
+        </div>
+        {isAuthor && (
+          <button
+            onClick={() => setShowDeleteConfirmation(true)}
+            className="ml-2 md:ml-4 px-4 py-2 rounded bg-black text-white"
+          >
+            Delete Blog
+          </button>
+        )}
+      </div>
+
+      <div className="text-slate-800 pt-2 italic">
+        {blog.description}
+      </div>
+      <div className="text-slate-500 pt-2">
+        Post on {new Date(blog.createdAt).toLocaleDateString()}
+      </div>
+      <div id="bodyContainer" className="pt-4 pb-4">
+        <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
+      </div>
+    </div>
+    <div className="md:col-span-4 mt-6 md:mt-0">
+      <div className="text-slate-600 text-lg">
+        Author
+      </div>
+      <div className="flex flex-wrap items-center">
+        <div className="pr-4 flex justify-center mb-4 md:mb-0">
+          <Avatar size="big" name={blog.author.name || "Anonymous"} />
+        </div>
+        <div>
+          <div className="text-xl font-bold">
+            {blog.author.name || "Anonymous"}
+          </div>
+          <div className="pt-2 text-slate-500">
+            {blog.author.about}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {showDeleteConfirmation && (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <h2 className="text-xl font-bold mb-4">Warning</h2>
+        <p className="mb-4">Do you really want to delete the blog?</p>
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShowDeleteConfirmation(false)}
+            className="mr-4 px-4 py-2 rounded bg-gray-500 text-white"
+          >
+            No
+          </button>
+          <button
+            onClick={() => {
+              handleDelete();
+              setShowDeleteConfirmation(false);
+            }}
+            className="px-4 py-2 rounded bg-red-500 text-white"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  )}
+    </div>
     </div>
   );
 }

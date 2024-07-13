@@ -32,34 +32,34 @@ export const Appbar1: React.FC<AppbarProps> = ({ onButtonClick }) => {
   console.log(name);
   if(loading)
       {
-          return <div className="border-b py-4 flex justify-between px-10">
+          return <div className="border-b py-4 flex justify-between items-center px-2 sm:px-10">
           <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
-          Insight
-         </Link>
-         <div>
-         </div>
-          <div className="flex flex-row">
+              Insight
+          </Link>
+          
+          <div className="flex flex-row -mr-10">
           <button
-          type="button"
-          onClick={onButtonClick}
-          className="focus:outline-none text-white bg-gray-500 hover:bg-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mt-4 mr-12"
-        >
-          Publish
-        </button>
+              type="button"
+              onClick={onButtonClick}
+              className="focus:outline-none text-white bg-gray-500 hover:bg-black font-medium rounded-lg text-sm px-2 sm:px-5 py-2.5 me-2 mt-4 mr-12"
+            >
+              Publish
+            </button>
+              {/* <DarkMode/> */}
           {/* <Avatar1 name={name}/> */}
           </div>
-          </div>
+      </div>
       }
-  return <div className="border-b py-4 flex justify-between items-center px-10">
+  return <div className="border-b py-4 flex justify-between items-center px-2 sm:px-10">
       <Link to={'/blogs'} className="flex items-center text-xl font-semibold cursor-pointer">
           Insight
       </Link>
       
-      <div className="flex flex-row">
+      <div className="flex flex-row -mr-10">
       <button
           type="button"
           onClick={onButtonClick}
-          className="focus:outline-none text-white bg-gray-500 hover:bg-black font-medium rounded-lg text-sm px-5 py-2.5 me-2 mt-4 mr-12"
+          className="focus:outline-none text-white bg-gray-500 hover:bg-black font-medium rounded-lg text-sm px-2 sm:px-5 py-2.5 me-2 mt-4 mr-12"
         >
           Publish
         </button>
